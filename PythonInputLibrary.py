@@ -75,12 +75,27 @@ user32.SendInput.argtypes = (wintypes.UINT, # nInputs
 
 # Functions
 
-def PressKey(hexKeyCode):
+def PrintString(to_print):
+    for c in to_print:
+        PressKey(GetKeyCode(c))
+        
+
+def ChangeLanguage():
+    RawPressKey(GetKeyCode('shift'))
+    RawPressKey(GetKeyCode('alt'))
+    RawReleaseKey(GetKeyCode('alt'))
+    RawReleaseKey(GetKeyCode('shift'))
+
+def PressKey(KeyCode):
+    RawPressKey(KeyCode)
+    RawReleaseKey(KeyCode)
+
+def RawPressKey(hexKeyCode):
     x = INPUT(type=INPUT_KEYBOARD,
               ki=KEYBDINPUT(wVk=hexKeyCode))
     user32.SendInput(1, ctypes.byref(x), ctypes.sizeof(x))
 
-def ReleaseKey(hexKeyCode):
+def RawReleaseKey(hexKeyCode):
     x = INPUT(type=INPUT_KEYBOARD,
               ki=KEYBDINPUT(wVk=hexKeyCode,
                             dwFlags=KEYEVENTF_KEYUP))
@@ -89,6 +104,36 @@ def ReleaseKey(hexKeyCode):
 def delay(length):
     time.sleep(length)
 
+def GetKeyCode(char):
+    special_keys = {
+        'enter' : 0x0D , 
+        'delete' : 0x2E , 
+        'shift' : 0xA0, 
+        'ctrl' : 0x11, 
+        'up' : 0x26, 
+        'down' : 0x28, 
+        'left' : 0x25,
+        'right' : 0x27,
+        'space' : 0x20,
+        'alt' : 0x12
+    }
+    if char in special_keys:
+        return special_keys[char]
+    elif(ord(char) <= 57 and ord(char) >= 48):
+        return 0x30 + (ord(char) - ord('0'))
+    else :
+        char = char.upper()
+        return 0x41 + (ord(char) - ord('A'))
+
+def SinglePress(char):
+    PressKey(char)
+    ReleaseKey(char)
+    
+def CominePress(listy):
+    for x in listy:
+        PressKey(x)
+    for x in listy:
+        ReleaseKey(x)
 
 '''
 if __name__ == "__main__":
