@@ -73,82 +73,28 @@ user32.SendInput.argtypes = (wintypes.UINT, # nInputs
                              ctypes.c_int)  # cbSize
 
 
-# Functions
-
-def PrintString(to_print):
-    for c in to_print:
-        PressKey(GetKeyCode(c))
-        
-
-def ChangeLanguage():
-    RawPressKey(GetKeyCode('shift'))
-    RawPressKey(GetKeyCode('alt'))
-    RawReleaseKey(GetKeyCode('alt'))
-    RawReleaseKey(GetKeyCode('shift'))
-
-def PressKey(KeyCode):
+#Press and release a key
+#@param KeyCode (int) - key code representing the desired key
+def SinglePressKey(KeyCode):
     RawPressKey(KeyCode)
     RawReleaseKey(KeyCode)
 
-def RawPressKey(hexKeyCode):
+#Press a key
+#@param hexKeyCode (int) - key code representing the desired key
+def PressKey(hexKeyCode):
     x = INPUT(type=INPUT_KEYBOARD,
               ki=KEYBDINPUT(wVk=hexKeyCode))
     user32.SendInput(1, ctypes.byref(x), ctypes.sizeof(x))
 
-def RawReleaseKey(hexKeyCode):
+#Release a key
+#@param hexKeyCode (int) - key code representing the desired key
+def ReleaseKey(hexKeyCode):
     x = INPUT(type=INPUT_KEYBOARD,
               ki=KEYBDINPUT(wVk=hexKeyCode,
                             dwFlags=KEYEVENTF_KEYUP))
     user32.SendInput(1, ctypes.byref(x), ctypes.sizeof(x))
 
-def delay(length):
+#Delays the program
+#@param length (int) - How many milliseconds the program should delay.
+def Delay(length):
     time.sleep(length)
-
-def GetKeyCode(char):
-    special_keys = {
-        'enter' : 0x0D , 
-        'delete' : 0x2E , 
-        'shift' : 0xA0, 
-        'ctrl' : 0x11, 
-        'up' : 0x26, 
-        'down' : 0x28, 
-        'left' : 0x25,
-        'right' : 0x27,
-        'space' : 0x20,
-        'alt' : 0x12
-    }
-    if char in special_keys:
-        return special_keys[char]
-    elif(ord(char) <= 57 and ord(char) >= 48):
-        return 0x30 + (ord(char) - ord('0'))
-    else :
-        char = char.upper()
-        return 0x41 + (ord(char) - ord('A'))
-
-def SinglePress(char):
-    PressKey(char)
-    ReleaseKey(char)
-    
-def CominePress(listy):
-    for x in listy:
-        PressKey(x)
-    for x in listy:
-        ReleaseKey(x)
-
-'''
-if __name__ == "__main__":
-    print("Before")
-    time.sleep(5)
-    print("After")
-    for i in range(20):
-        PressKey(0x11)
-        PressKey(0x56)
-        delay(0.01)
-        ReleaseKey(0x11)
-        ReleaseKey(0x56)
-        delay(0.01)
-        PressKey(0x0D)
-        delay(0.01)
-        ReleaseKey(0x0D)
-        delay(0.01)
-'''
