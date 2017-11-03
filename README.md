@@ -1,5 +1,5 @@
 # Python Input Library
-A library that allows you to simulate all sorts of input to your computer. The library consists of 3 parts.
+A library that allows you to simulate all sorts of input to your computer. The library consists of 3 parts. In this document i will list the methods of each file, a short description, their parameters and return values.
 
 ---
 
@@ -39,7 +39,7 @@ Return value :
 
 ### SetMousePos
 Description : Changes the mouse location  
-Parameters : 
+Parameters :
 * The desired x location.  
 * The desired y location.  
 
