@@ -1,5 +1,5 @@
 # Python Input Library
-A library that allows you to simulate all sorts of input to your computer. The library consists of 3 parts. In this document i will list the methods of each file, a short description, their parameters and return values.
+A library that allows you to simulate all sorts of input to your computer. The library consists of 3 files. In this document i will list the methods of each file, a short description, their parameters and return values.
 
 ---
 
