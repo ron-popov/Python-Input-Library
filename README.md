@@ -1,6 +1,8 @@
 # Python Input Library
-A library that allowes to simulate windows key presses
+A library that allowes to simulate windows key presses.  
 The library consists of 3 sections, each one has different methods that do different things.
+In this document i will list the methods that each one of the 3 files contains, their description,
+the parameters you should pass them and also their return value.
 
 # utils
 ### GetMonitorRes
